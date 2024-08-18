@@ -24,3 +24,4 @@ djangorestframework
 django-crispy-forms
 crispy-bootstrap4
 boto3==1.26.59
+django-storages==1.1.8
