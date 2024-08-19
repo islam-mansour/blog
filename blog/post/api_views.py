@@ -29,7 +29,7 @@ class LikeToggleAPIView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+from .tasks import send, receive
 class CommentCreateAPI(APIView):
     
     def post(self, request, post_id):
@@ -39,10 +39,14 @@ class CommentCreateAPI(APIView):
 
         # Get the associated blog
         post = get_object_or_404(Post, pk=post_id)
+        
+        # TODO: figure why are you having connection refused #
+        # send.delay()
 
-        # Create a Comment instance
+        # receive.delay()
+
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(post=post, user=request.user)
             return Response({'message': 'Comment created successfully'}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

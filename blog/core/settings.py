@@ -14,6 +14,7 @@ from pathlib import Path
 
 # To keep secret keys in environment variables
 from dotenv import load_dotenv
+from datetime import timedelta
 
 load_dotenv()
 
@@ -193,6 +194,11 @@ EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_TASK_TRACK_STARTED = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
